@@ -1,0 +1,15 @@
+{
+  "name": "stu-shared-skills",
+  "owner": { "name": "Stu Hollenshead", "email": "stuhollenshead@gmail.com" },
+  "metadata": {
+    "description": "Marketplace for syncing selected skills between Stu's Claude accounts.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "stu-skills",
+      "source": "./plugins/stu-skills",
+      "description": "Stu's shared 10PM Curfew skill bundle."
+    }
+  ]
+}
