@@ -1,0 +1,6 @@
+{
+  "name": "stu-skills",
+  "version": "1.0.0",
+  "description": "Shared bundle of Stu's selected skills, synced across his Claude accounts via GitHub.",
+  "author": { "name": "Stu Hollenshead", "email": "stuhollenshead@gmail.com" }
+}
