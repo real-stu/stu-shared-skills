@@ -1,70 +1,50 @@
 # stu-shared-skills
 
-A private **Claude plugin marketplace** for syncing a chosen set of skills between your two
-Claude accounts. One GitHub repo is the single source of truth; both accounts install it and
-either one can push updates the other picks up automatically.
+A **public Claude plugin marketplace** for syncing a chosen set of skills between Stu's two
+Claude accounts. One GitHub repo is the single source of truth: both accounts add it and either
+one can push updates the other picks up.
 
 ## What's inside
 
-A single plugin, **`stu-skills`**, containing these 8 skills:
+A single plugin, **`stu-skills`**, containing these 6 skills:
 
 | Skill | What it does |
 |---|---|
 | 10pm-curfew-creative-strategy-ops | Full-funnel paid-social creative toolkit |
-| brand-performance-dashboard | Hostable HTML performance dashboard from media plan + metrics |
-| client-call-synopsis | Granola client/partner calls → shareable Word synopsis |
 | email-deliverability-cleaner | Clean/validate an email list before a send |
 | girls-fact-post | Fact-style branded IG captions for @girls |
 | girls-story-series | 10-slide interactive poll Story Series for @girls |
 | motion-creative-benchmarks-2026 | Motion 2026 creative-testing benchmark data |
 | skill-creator | Create, edit, optimize, and eval skills |
 
-## One-time setup (do this once, from Account A)
+## Install on each account (Cowork desktop app)
 
-1. Create an **empty private repo** on GitHub named `stu-shared-skills`.
-2. From the unzipped folder:
+Do this once per account:
 
-   ```bash
-   cd stu-shared-skills
-   git init
-   git add -A
-   git commit -m "Initial shared skills bundle"
-   git branch -M main
-   git remote add origin git@github.com:<your-username>/stu-shared-skills.git
-   git push -u origin main
-   ```
+1. Open **Customize → Plugins** in the sidebar.
+2. Click **+ → Add from a repository**.
+3. Enter `real-stu/stu-shared-skills` (or `https://github.com/real-stu/stu-shared-skills`) and **Sync**.
+4. Find **Stu skills** and click **Install**.
 
-## Install on each account (Account A and Account B)
-
-In Claude Code / Cowork on each machine:
-
-```
-/plugin marketplace add <your-username>/stu-shared-skills
-/plugin install stu-skills@stu-shared-skills
-```
-
-That's the only manual step per account. Both accounts now have all 8 skills.
+That's the only manual step per account. Both accounts now have all 6 skills.
 
 ## Editing & syncing
 
-- **To change or add a skill:** edit files under `plugins/stu-skills/skills/`, then run
-  `scripts/push-skills.sh` (or `git add -A && git commit && git push`).
-- **To receive the other account's changes:** run `scripts/sync-skills.sh`, then in Claude
-  run `/plugin marketplace update stu-shared-skills`.
-- Because both accounts share one repo, syncing is **bidirectional** — whoever pushes last wins,
-  standard git.
+- **To change a skill:** on GitHub, open the file under `plugins/stu-skills/skills/`, click the
+  pencil icon, edit, and **Commit changes**.
+- **To add a new skill:** upload its folder (its own directory with a `SKILL.md`) into
+  `plugins/stu-skills/skills/` and commit. No manifest edits needed — the plugin picks up every
+  skill in that folder.
+- **To pull the latest on an account:** open the **Stu skills** plugin, use its **⋮** menu, and
+  choose sync/update.
+- Because both accounts share one repo, syncing is **bidirectional** — whoever pushes last wins.
 
-## Near-full automation
+## A note on visibility
 
-Point a scheduled task (cron, or a Claude scheduled task) at `scripts/sync-skills.sh` on each
-machine — e.g. daily at 8am — so each account auto-pulls the latest before you start working.
-After that, the only action you ever take is editing a skill and pushing.
-
-## Adding more skills later
-
-Drop another skill folder (its own directory with a `SKILL.md`) into
-`plugins/stu-skills/skills/`, commit, and push. No manifest edits needed — the plugin picks up
-every skill in that folder.
+This repo is **public**, so anything committed here is readable by anyone with the link. Keep
+skills that contain pricing, rate cards, media plans, or client-confidential material OUT of this
+repo. (That's why brand-performance-dashboard and client-call-synopsis were intentionally left
+out.)
 
 ## Repo structure
 
@@ -78,10 +58,13 @@ stu-shared-skills/
 │     │  └─ plugin.json        # plugin manifest
 │     └─ skills/               # one folder per skill
 │        ├─ 10pm-curfew-creative-strategy-ops/
-│        ├─ brand-performance-dashboard/
-│        └─ … (6 more)
+│        ├─ email-deliverability-cleaner/
+│        ├─ girls-fact-post/
+│        ├─ girls-story-series/
+│        ├─ motion-creative-benchmarks-2026/
+│        └─ skill-creator/
 ├─ scripts/
-│  ├─ sync-skills.sh           # pull + refresh
-│  └─ push-skills.sh           # commit + push
+│  ├─ sync-skills.sh           # optional: git pull + refresh
+│  └─ push-skills.sh           # optional: git commit + push
 └─ README.md
 ```
